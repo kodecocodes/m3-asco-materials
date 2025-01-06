@@ -22,6 +22,9 @@
 		B8A664072D124BFB004A5537 /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A664062D124BF8004A5537 /* WeatherRepository.swift */; };
 		B8A6640C2D1293F7004A5537 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A6640B2D1293EC004A5537 /* WeatherView.swift */; };
 		B8A6640E2D12985E004A5537 /* WeatherQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A6640D2D12985A004A5537 /* WeatherQueryView.swift */; };
+		B8E6E8172D2BA1490011F6BE /* WeatherRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E6E8162D2BA1490011F6BE /* WeatherRepositoryImpl.swift */; };
+		B8E6E8192D2BA1A80011F6BE /* WeatherServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E6E8182D2BA1A80011F6BE /* WeatherServiceError.swift */; };
+		B8E6E81B2D2BA1BC0011F6BE /* WAPIWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E6E81A2D2BA1BC0011F6BE /* WAPIWeatherService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		B8A664062D124BF8004A5537 /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
 		B8A6640B2D1293EC004A5537 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		B8A6640D2D12985A004A5537 /* WeatherQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherQueryView.swift; sourceTree = "<group>"; };
+		B8E6E8162D2BA1490011F6BE /* WeatherRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepositoryImpl.swift; sourceTree = "<group>"; };
+		B8E6E8182D2BA1A80011F6BE /* WeatherServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceError.swift; sourceTree = "<group>"; };
+		B8E6E81A2D2BA1BC0011F6BE /* WAPIWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAPIWeatherService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +143,8 @@
 		B8A664022D123AA0004A5537 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B8E6E81A2D2BA1BC0011F6BE /* WAPIWeatherService.swift */,
+				B8E6E8182D2BA1A80011F6BE /* WeatherServiceError.swift */,
 				B8A664032D123ADB004A5537 /* WeatherService.swift */,
 			);
 			path = Network;
@@ -145,6 +153,7 @@
 		B8A664052D124BF3004A5537 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B8E6E8162D2BA1490011F6BE /* WeatherRepositoryImpl.swift */,
 				B8A664062D124BF8004A5537 /* WeatherRepository.swift */,
 			);
 			path = Repository;
@@ -262,11 +271,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8E6E81B2D2BA1BC0011F6BE /* WAPIWeatherService.swift in Sources */,
 				B8A6640C2D1293F7004A5537 /* WeatherView.swift in Sources */,
 				B8A663FB2D12000A004A5537 /* WeatherLocation.swift in Sources */,
 				B8A664042D123ADE004A5537 /* WeatherService.swift in Sources */,
+				B8E6E8192D2BA1A80011F6BE /* WeatherServiceError.swift in Sources */,
 				B8A664072D124BFB004A5537 /* WeatherRepository.swift in Sources */,
 				B8A663F92D11FFF5004A5537 /* WeatherData.swift in Sources */,
+				B8E6E8172D2BA1490011F6BE /* WeatherRepositoryImpl.swift in Sources */,
 				18D775C522AD944300AE281E /* HomeScreen.swift in Sources */,
 				B8A663F52D11FA86004A5537 /* HomeViewModel.swift in Sources */,
 				B8A664012D120048004A5537 /* HomeState.swift in Sources */,

@@ -42,14 +42,15 @@ class HomeViewModel: ObservableObject {
   }
   
   func getWeather(query: String) {
+    // 1
     state = .loading
-    
-    Task { @MainActor in
-      let result = await weatherRepo.fetchWeather(for: query)
-      switch result {
-      case .success(let weatherData):
+      
+    // 2
+    Task {
+      do {
+        let weatherData = try await weatherRepo.fetchWeather(for: query)
         state = .ready(weatherData)
-      case .failure(_):
+      } catch (_) {
         state = .error
       }
     }

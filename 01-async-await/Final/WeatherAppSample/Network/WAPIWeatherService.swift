@@ -1,4 +1,4 @@
-/// Copyright (c) 2024 Kodeco Inc.
+/// Copyright (c) 2025 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,16 +32,30 @@
 
 import Foundation
 
-class HomeViewModel: ObservableObject {
-  @Published var state: HomeState = .empty
+class WAPIWeatherService: WeatherService {
+  // 1
+  private let apiKey = "<INSERT_API_KEY>"
+  // 2
+  private let baseUrl = "https://api.weatherapi.com/v1"
+  private let currentWeatherPath = "/current.json"
+  private let queryParamName = "q"
+  private let keyParamName = "key"
   
-  private let weatherRepo: WeatherRepository
-  
-  init(weatherRepo: WeatherRepository = WeatherRepositoryImpl()) {
-    self.weatherRepo = weatherRepo
-  }
-  
-  func getWeather(query: String) {
-    // TODO: Implement
+  // 3
+  func getWeather(for query: String) async throws -> WeatherData {
+    var urlComponents = URLComponents(string: baseUrl + currentWeatherPath)
+    urlComponents?.queryItems = [
+      URLQueryItem(name: queryParamName, value: query),
+      URLQueryItem(name: keyParamName, value: apiKey),
+    ]
+    
+    guard let url = urlComponents?.url else {
+      throw WeatherServiceError.invalidURL
+    }
+    
+    // 4
+    let (data, _) = try await URLSession.shared.data(from: url)
+    let decoder = JSONDecoder()
+    return try decoder.decode(WeatherData.self, from: data)
   }
 }

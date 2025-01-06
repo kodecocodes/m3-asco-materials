@@ -1,4 +1,4 @@
-/// Copyright (c) 2024 Kodeco Inc.
+/// Copyright (c) 2025 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,18 +30,26 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
-
-class HomeViewModel: ObservableObject {
-  @Published var state: HomeState = .empty
+class WeatherRepositoryImpl: WeatherRepository {
   
-  private let weatherRepo: WeatherRepository
+  private let weatherService: WeatherService
+  private var weatherDataList: [String: WeatherData] = [:]
   
-  init(weatherRepo: WeatherRepository = WeatherRepositoryImpl()) {
-    self.weatherRepo = weatherRepo
+  init (weatherService: WeatherService = WAPIWeatherService()) {
+    self.weatherService = weatherService
   }
-  
-  func getWeather(query: String) {
-    // TODO: Implement
+
+  func fetchWeather(for query: String) async throws -> WeatherData {
+    // 1
+    if let weatherData = weatherDataList[query] {
+      return weatherData
+    }
+
+    // 2
+    let weatherData = try await weatherService.getWeather(for: query)
+    // 3
+    weatherDataList[query] = weatherData
+    // 4
+    return weatherData
   }
 }
