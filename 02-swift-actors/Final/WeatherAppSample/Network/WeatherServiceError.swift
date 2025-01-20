@@ -1,4 +1,4 @@
-/// Copyright (c) 2024 Kodeco Inc.
+/// Copyright (c) 2025 Kodeco Inc.
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,32 +30,6 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-protocol WeatherRepository {
-  func fetchWeather(for query: String) async -> Result<WeatherData, Error>
-}
-
-class WeatherRepositoryImpl: WeatherRepository {
-  
-  private let weatherService: WeatherService
-  private var weatherDataList: [String: WeatherData] = [:]
-  
-  init (weatherService: WeatherService = WAPIWeatherService()) {
-    self.weatherService = weatherService
-  }
-
-  func fetchWeather(for query: String) async -> Result<WeatherData, Error> {
-    if let weatherData = weatherDataList[query] {
-      return .success(weatherData)
-    }
-    
-    // API call to fetch weather
-    let result = await weatherService.getWeather(for: query)
-    switch result {
-    case .success(let weatherData):
-      weatherDataList[query] = weatherData
-      return .success(weatherData)
-    case .failure(let error):
-      return .failure(error)
-    }
-  }
+enum WeatherServiceError: Error {
+  case invalidURL
 }
