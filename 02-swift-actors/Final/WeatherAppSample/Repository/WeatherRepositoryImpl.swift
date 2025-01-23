@@ -30,7 +30,8 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-class WeatherRepositoryImpl: WeatherRepository {
+// 1
+actor WeatherRepositoryImpl: WeatherRepository {
   
   private let weatherService: WeatherService
   private var weatherDataList: [String: WeatherData] = [:]
@@ -40,16 +41,12 @@ class WeatherRepositoryImpl: WeatherRepository {
   }
 
   func fetchWeather(for query: String) async throws -> WeatherData {
-    // 1
     if let weatherData = weatherDataList[query] {
       return weatherData
     }
 
-    // 2
     let weatherData = try await weatherService.getWeather(for: query)
-    // 3
     weatherDataList[query] = weatherData
-    // 4
     return weatherData
   }
 }

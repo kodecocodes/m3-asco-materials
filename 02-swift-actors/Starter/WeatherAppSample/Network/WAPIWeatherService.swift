@@ -33,15 +33,13 @@
 import Foundation
 
 class WAPIWeatherService: WeatherService {
-  // 1
   private let apiKey = "<INSERT_API_KEY>"
-  // 2
+  
   private let baseUrl = "https://api.weatherapi.com/v1"
   private let currentWeatherPath = "/current.json"
   private let queryParamName = "q"
   private let keyParamName = "key"
   
-  // 3
   func getWeather(for query: String) async throws -> WeatherData {
     var urlComponents = URLComponents(string: baseUrl + currentWeatherPath)
     urlComponents?.queryItems = [
@@ -53,7 +51,6 @@ class WAPIWeatherService: WeatherService {
       throw WeatherServiceError.invalidURL
     }
     
-    // 4
     let (data, _) = try await URLSession.shared.data(from: url)
     let decoder = JSONDecoder()
     return try decoder.decode(WeatherData.self, from: data)

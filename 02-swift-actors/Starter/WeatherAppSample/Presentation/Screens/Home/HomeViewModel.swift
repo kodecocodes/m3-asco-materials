@@ -48,10 +48,9 @@ class HomeViewModel: ObservableObject {
   }
 
   func getWeather(query: String) {
-    // 1
     state = .loading
 
-    // 2
+    // TODO: Use @MainActor
     Task {
       do {
         let weatherData = try await weatherRepo.fetchWeather(for: query)
