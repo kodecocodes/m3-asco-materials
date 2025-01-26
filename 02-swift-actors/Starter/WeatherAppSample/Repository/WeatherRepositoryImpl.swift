@@ -30,7 +30,6 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-// TODO: Change to actor
 class WeatherRepositoryImpl: WeatherRepository {
   
   private let weatherService: WeatherService
