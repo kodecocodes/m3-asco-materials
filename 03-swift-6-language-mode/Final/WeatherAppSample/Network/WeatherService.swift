@@ -30,40 +30,6 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
-
-protocol WeatherService {
-  func getWeather(for query: String) async -> Result<WeatherData, Error>
-}
-
-enum WeatherServiceError: Error {
-  case invalidURL
-}
-
-class WAPIWeatherService: WeatherService {
-  private let apiKey = "<INSERT_API_KEY>"
-  private let baseUrl = "https://api.weatherapi.com/v1"
-  private let currentWeatherPath = "/current.json"
-  private let queryParamName = "q"
-  private let keyParamName = "key"
-  
-  func getWeather(for query: String) async -> Result<WeatherData, Error> {
-    var urlComponents = URLComponents(string: baseUrl + currentWeatherPath)
-    urlComponents?.queryItems = [
-      URLQueryItem(name: queryParamName, value: query),
-      URLQueryItem(name: keyParamName, value: apiKey),
-    ]
-    
-    guard let url = urlComponents?.url else {
-      return .failure(WeatherServiceError.invalidURL)
-    }
-    
-    do {
-      let (data, _) = try await URLSession.shared.data(from: url)
-      let decoder = JSONDecoder()
-      return .success(try decoder.decode(WeatherData.self, from: data))
-    } catch (let error) {
-      return .failure(error)
-    }
-  }
+protocol WeatherService: Actor {
+  func getWeather(for query: String) async throws -> WeatherData
 }
