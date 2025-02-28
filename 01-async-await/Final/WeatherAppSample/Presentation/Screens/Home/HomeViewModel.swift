@@ -40,17 +40,24 @@ class HomeViewModel: ObservableObject {
   init(weatherRepo: WeatherRepository = WeatherRepositoryImpl()) {
     self.weatherRepo = weatherRepo
   }
-  
+
+  func updateState(state: HomeState) {
+    DispatchQueue.main.async {
+      self.state = state
+    }
+  }
+
   func getWeather(query: String) {
+    // 1
     state = .loading
-    
-    Task { @MainActor in
-      let result = await weatherRepo.fetchWeather(for: query)
-      switch result {
-      case .success(let weatherData):
-        state = .ready(weatherData)
-      case .failure(_):
-        state = .error
+
+    // 2
+    Task {
+      do {
+        let weatherData = try await weatherRepo.fetchWeather(for: query)
+        updateState(state: .ready(weatherData))
+      } catch (_) {
+        updateState(state: .error)
       }
     }
   }
