@@ -32,7 +32,8 @@
 
 import Foundation
 
-class HomeViewModel: ObservableObject {
+// 1
+@MainActor class HomeViewModel: ObservableObject {
   @Published var state: HomeState = .empty
   
   private let weatherRepo: WeatherRepository
@@ -40,16 +41,16 @@ class HomeViewModel: ObservableObject {
   init(weatherRepo: WeatherRepository = WeatherRepositoryImpl()) {
     self.weatherRepo = weatherRepo
   }
-  
+
   func getWeather(query: String) {
     state = .loading
-    
-    Task { @MainActor in
-      let result = await weatherRepo.fetchWeather(for: query)
-      switch result {
-      case .success(let weatherData):
+
+    // 2
+    Task {
+      do {
+        let weatherData = try await weatherRepo.fetchWeather(for: query)
         state = .ready(weatherData)
-      case .failure(_):
+      } catch (_) {
         state = .error
       }
     }
